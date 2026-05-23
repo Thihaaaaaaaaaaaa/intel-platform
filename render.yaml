@@ -1,0 +1,45 @@
+# ═══════════════════════════════════════════════════════════════
+# RENDER.COM DEPLOY CONFIG
+# Drop this file in your GitHub repo root and connect to Render.
+# ═══════════════════════════════════════════════════════════════
+
+services:
+  - type: web
+    name: intel-platform
+    runtime: node
+    region: oregon          # or frankfurt for EU users
+    plan: free              # upgrade to starter ($7/mo) for always-on + more RAM
+
+    # Build: install dependencies from root package.json
+    buildCommand: npm install
+
+    # Start: run server from root
+    startCommand: npm start
+
+    # Health check — Render pings this to confirm the service is up
+    healthCheckPath: /api/health
+
+    # Environment variables — set these in Render Dashboard
+    # (or add envVarGroups below for shared secrets)
+    envVars:
+      - key: NODE_ENV
+        value: production
+
+      # Optional API keys — add in Render Dashboard, not here
+      # - key: NEWS_API_KEY
+      #   sync: false
+      # - key: NASA_FIRMS_KEY
+      #   sync: false
+      # - key: AISHUB_KEY
+      #   sync: false
+      # - key: ALPHA_VANTAGE_KEY
+      #   sync: false
+      # - key: EXCHANGE_RATE_KEY
+      #   sync: false
+      # - key: OPENSKY_USER
+      #   sync: false
+      # - key: OPENSKY_PASS
+      #   sync: false
+
+    # Auto-deploy when you push to main branch
+    autoDeploy: true

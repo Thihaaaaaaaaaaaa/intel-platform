@@ -1,0 +1,276 @@
+/* ── ATLAS PAGE ─────────────────────────────────────────────── */
+#atlas-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  height: 100%;
+  gap: 0;
+}
+
+#atlas-left {
+  border-right: 1px solid var(--edge);
+  position: relative;
+}
+
+#atlas-detail {
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+
+/* Search + filter bar */
+.atlas-search-wrap {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--edge);
+  background: rgba(255,255,255,0.018);
+}
+
+.atlas-filter-row {
+  display: flex;
+  gap: 4px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--edge);
+  flex-wrap: wrap;
+  background: rgba(255,255,255,0.012);
+}
+
+.atlas-filter {
+  font-size: 8px !important;
+  padding: 4px 9px !important;
+  letter-spacing: 1px !important;
+  border-radius: var(--r-sm) !important;
+}
+
+/* Country list entries */
+.atlas-entry {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--edge);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  position: relative;
+}
+
+.atlas-entry:hover {
+  background: rgba(56, 189, 248, 0.05);
+}
+
+.atlas-entry.selected {
+  background: rgba(56, 189, 248, 0.08);
+  border-bottom-color: rgba(56, 189, 248, 0.12);
+}
+
+.atlas-entry.selected::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 6px; bottom: 6px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--acc), var(--acc4));
+  border-radius: 2px;
+}
+
+.atlas-entry .flag-big { font-size: 22px; flex-shrink: 0; }
+
+.atlas-entry .info { flex: 1; min-width: 0; }
+
+.atlas-entry .name {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--txt-1);
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.atlas-entry .sub {
+  font-size: 9px;
+  color: var(--txt-3);
+  margin-top: 2px;
+  letter-spacing: 0.3px;
+}
+
+.atlas-entry .mil {
+  font-size: 9px;
+  color: var(--acc);
+  margin-top: 1px;
+  opacity: 0.75;
+}
+
+/* ── Country detail panel ───────────────────────────────────── */
+#atlas-detail-content {
+  height: 100%;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(56,189,248,0.15) transparent;
+}
+
+#atlas-detail-content::-webkit-scrollbar { width: 2px; }
+#atlas-detail-content::-webkit-scrollbar-thumb {
+  background: rgba(56,189,248,0.20);
+  border-radius: 2px;
+}
+
+/* Header */
+.ad-header {
+  padding: 28px 32px 22px;
+  border-bottom: 1px solid var(--edge);
+  background: linear-gradient(180deg,
+    rgba(56, 189, 248, 0.04) 0%,
+    rgba(56, 189, 248, 0.01) 100%);
+  position: relative;
+}
+
+.ad-header::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(56,189,248,0.25), transparent);
+}
+
+.ad-flag { font-size: 52px; margin-bottom: 10px; line-height: 1; }
+
+.ad-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--txt-1);
+  letter-spacing: 0.3px;
+  margin-bottom: 5px;
+}
+
+.ad-sub {
+  font-size: 12px;
+  color: var(--txt-3);
+  letter-spacing: 0.3px;
+  margin-bottom: 12px;
+}
+
+.ad-leader {
+  font-size: 12px;
+  color: var(--txt-2);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Sections */
+.ad-section {
+  padding: 18px 32px;
+  border-bottom: 1px solid var(--edge);
+}
+
+.ad-section-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  color: var(--txt-4);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--edge);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ad-grid  { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.ad-grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+
+.ad-stat {
+  background: var(--glass-3);
+  border: 1px solid var(--edge);
+  border-radius: var(--r-md);
+  padding: 10px 13px;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.15s, border-color 0.15s, transform 0.15s;
+}
+
+.ad-stat:hover {
+  background: var(--glass-hover);
+  border-color: var(--edge-accent);
+  transform: translateY(-1px);
+}
+
+.ad-stat::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent);
+}
+
+.ad-stat .v {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 15px;
+  color: var(--acc-vivid);
+  line-height: 1;
+}
+
+.ad-stat .l {
+  font-family: 'Inter', sans-serif;
+  font-size: 7px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  color: var(--txt-4);
+  text-transform: uppercase;
+  margin-top: 5px;
+}
+
+.ad-stat.red    .v { color: var(--crit); }
+.ad-stat.green  .v { color: var(--green); }
+.ad-stat.orange .v { color: var(--high); }
+.ad-stat.red    { border-color: rgba(244,63,94,0.18); }
+.ad-stat.green  { border-color: rgba(52,211,153,0.18); }
+
+/* Pills */
+.ad-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+
+.ad-pill {
+  font-family: 'Inter', sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  padding: 4px 11px;
+  border-radius: 20px;
+  letter-spacing: 0.4px;
+}
+
+.ad-pill.ally {
+  background: rgba(52, 211, 153, 0.10);
+  border: 1px solid rgba(52, 211, 153, 0.22);
+  color: var(--green);
+}
+
+.ad-pill.threat {
+  background: rgba(244, 63, 94, 0.10);
+  border: 1px solid rgba(244, 63, 94, 0.22);
+  color: var(--crit);
+}
+
+.ad-pill.tag {
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.20);
+  color: var(--acc-vivid);
+}
+
+/* Press freedom badges */
+.press-badge {
+  display: inline-block;
+  font-family: 'Inter', sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+}
+
+.press-badge.free   { background: rgba(52,211,153,0.12); color: var(--green); border: 1px solid rgba(52,211,153,0.22); }
+.press-badge.partly { background: rgba(245,158,11,0.12);  color: var(--med);   border: 1px solid rgba(245,158,11,0.22); }
+.press-badge.not    { background: rgba(244,63,94,0.12);   color: var(--crit);  border: 1px solid rgba(244,63,94,0.22); }

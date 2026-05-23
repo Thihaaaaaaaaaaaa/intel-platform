@@ -1,0 +1,160 @@
+/* ── MARKETS PAGE ───────────────────────────────────────────── */
+#markets-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  height: 100%;
+  gap: 1px;
+  background: var(--edge);
+}
+
+#mk-commodities { grid-column:1; grid-row:1; background: var(--glass-1); backdrop-filter: var(--blur-md); }
+#mk-defense     { grid-column:2; grid-row:1; background: var(--glass-1); backdrop-filter: var(--blur-md); }
+#mk-currencies  { grid-column:1; grid-row:2; background: var(--glass-1); backdrop-filter: var(--blur-md); }
+#mk-impact      { grid-column:2; grid-row:2; background: var(--glass-1); backdrop-filter: var(--blur-md); }
+
+/* Market rows */
+.mk-row {
+  display: flex;
+  align-items: center;
+  padding: 9px 16px;
+  border-bottom: 1px solid var(--edge);
+  gap: 10px;
+  transition: background 0.14s;
+}
+
+.mk-row:hover { background: rgba(56, 189, 248, 0.04); }
+
+.mk-symbol {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--acc-vivid);
+  font-weight: 400;
+  width: 56px;
+  flex-shrink: 0;
+  letter-spacing: 1px;
+}
+
+.mk-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--txt-3);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mk-flag  { font-size: 14px; flex-shrink: 0; }
+
+.mk-sparkline { width: 60px; height: 22px; flex-shrink: 0; }
+
+.mk-price {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 12px;
+  color: var(--txt-1);
+  width: 76px;
+  text-align: right;
+  flex-shrink: 0;
+  letter-spacing: 0.5px;
+}
+
+.mk-change {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  width: 64px;
+  text-align: right;
+  flex-shrink: 0;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+.mk-change.up {
+  color: var(--green);
+  text-shadow: 0 0 8px rgba(52,211,153,0.30);
+}
+.mk-change.down { color: var(--crit); }
+.mk-change.flat { color: var(--txt-4); }
+
+/* Currency pair */
+.mk-pair {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--acc-vivid);
+  width: 72px;
+  flex-shrink: 0;
+  letter-spacing: 1px;
+}
+
+.mk-rate {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 12px;
+  color: var(--txt-1);
+  width: 70px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* Impact analysis */
+.impact-section {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--edge);
+}
+
+.impact-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--txt-4);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.impact-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  color: var(--txt-3);
+  line-height: 1.70;
+}
+
+.impact-corr {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+  font-size: 9px;
+}
+
+.impact-corr .label {
+  font-family: 'Inter', sans-serif;
+  color: var(--txt-4);
+  width: 130px;
+  flex-shrink: 0;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+.impact-corr .bar {
+  flex: 1;
+  height: 3px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.impact-corr .fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+
+.impact-corr .val {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--acc-vivid);
+  width: 42px;
+  text-align: right;
+}

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GLOBAL INTELLIGENCE PLATFORM v2.0</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="main.css">
+<link rel="stylesheet" href="pages/globe.css">
+<link rel="stylesheet" href="pages/atlas.css">
+<link rel="stylesheet" href="pages/military.css">
+<link rel="stylesheet" href="pages/conflicts.css">
+<link rel="stylesheet" href="pages/newswire.css">
+<link rel="stylesheet" href="pages/markets.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/OBJLoader.js"></script>
+</head>
+<body>
+
+<div id="shell">
+
+  <!-- ── TOP NAVIGATION ── -->
+  <nav id="topnav">
+    <div class="brand">
+      <div class="brand-icon">⬡</div>
+      <div class="brand-text">Intel Platform</div>
+      <div class="brand-v">v3.0</div>
+    </div>
+    <div class="navtabs">
+      <button class="navtab active" data-page="globe">Globe</button>
+      <button class="navtab" data-page="atlas">Atlas</button>
+      <button class="navtab" data-page="military">Military</button>
+      <button class="navtab" data-page="conflicts">Conflicts</button>
+      <button class="navtab" data-page="newswire">News Wire</button>
+      <button class="navtab" data-page="markets">Markets</button>
+    </div>
+    <div id="topnav-right">
+      <div id="clock">UTC 00:00:00</div>
+      <div id="live-ind"><div id="live-dot"></div><span id="conn-status">INITIALIZING</span></div>
+    </div>
+  </nav>
+
+  <!-- ── PAGE CONTAINER ── -->
+  <div id="page-container">
+
+    <!-- PAGE 1: GLOBE -->
+    <div class="page active" id="page-globe">
+      <div id="globe-layout">
+        <aside id="globe-left" class="panel">
+          <div class="ph">
+            <div class="pt">⬡ Conflict Zones</div>
+            <div class="pc" id="g-conflict-count">— ACTIVE</div>
+          </div>
+          <div class="pscroll" id="g-conflict-list" style="flex:1.2"></div>
+          <div class="ph" style="border-top:1px solid var(--bdr);flex-shrink:0">
+            <div class="pt">⬡ Live Flights</div>
+            <div class="pc" id="g-flight-count">— TRACKED</div>
+          </div>
+          <div class="pscroll" id="g-flight-list" style="flex:0.5;max-height:120px"></div>
+          <div class="ph" style="border-top:1px solid var(--bdr);flex-shrink:0">
+            <div class="pt">🚢 Maritime Traffic</div>
+            <div class="pc" id="g-ship-count">— VESSELS</div>
+          </div>
+
+        </aside>
+        <main id="globe-main">
+          <canvas id="globe-canvas"></canvas>
+          <div id="globe-overlay">
+            <div class="globe-corner tl" id="g-tl">LIVE GLOBE<br>TRACKING ACTIVE</div>
+            <div class="globe-corner tr" id="g-tr">FLIGHTS: 0<br>CONFLICTS: 0</div>
+            <div class="globe-corner bl">DRAG ROTATE  ·  SCROLL ZOOM</div>
+            <div class="globe-corner br" id="g-br">CLICK ANY TARGET</div>
+          </div>
+          <div id="g-controls">
+            <button class="g-btn on" data-layer="flights">✈ FLIGHTS</button>
+            <button class="g-btn on sat" data-layer="sats">🛰 SATELLITES</button>
+            <button class="g-btn on ship" data-layer="ships">🚢 SHIPS</button>
+            <button class="g-btn on" data-layer="conflicts">⚠ CONFLICTS</button>
+            <button class="g-btn on cyber" data-layer="cyber">⚡ CYBER</button>
+            <button class="g-btn on cable" data-layer="cables">🌐 CABLES</button>
+            <button class="g-btn on" data-layer="currents">🌊 CURRENTS</button>
+            <button class="g-btn on" data-layer="clouds">☁ CLOUDS</button>
+            <button class="g-btn on fire" data-layer="wildfires">🔥 FIRES</button>
+            <button class="g-btn on" data-layer="heatmap">🌡 HEATMAP</button>
+            <button class="g-btn on" data-layer="weather">🌦 WEATHER</button>
+            <button class="g-btn on" data-layer="disasters">🚨 DISASTERS</button>
+            <button class="g-btn" data-layer="routes">ROUTES</button>
+          </div>
+          <div id="flight-tooltip"></div>
+          <div id="flight-card" style="display:none"></div>
+          <div id="globe-ticker"><div id="globe-ticker-text">LOADING FEED...</div></div>
+        </main>
+        <aside id="globe-right" class="panel">
+          <div class="ph">
+            <div class="pt">⬡ Intelligence Feed</div>
+            <div class="pc" id="g-news-count">0 ITEMS</div>
+          </div>
+          <div class="pscroll" id="g-news-list"></div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- PAGE 2: ATLAS (country profiles) -->
+    <div class="page" id="page-atlas">
+      <div id="atlas-layout">
+        <aside id="atlas-left" class="panel">
+          <div class="ph">
+            <div class="pt">⬡ Countries</div>
+            <div class="pc" id="atlas-count">— ENTRIES</div>
+          </div>
+          <div style="padding:8px 13px;border-bottom:1px solid var(--bdr)">
+            <input id="atlas-search" placeholder="Search countries..." style="width:100%;background:rgba(0,200,255,.04);border:1px solid var(--bdr);color:var(--tp);font-family:Share Tech Mono,monospace;font-size:10px;padding:7px;outline:none;letter-spacing:.5px">
+          </div>
+          <div style="display:flex;gap:4px;padding:8px 13px;border-bottom:1px solid var(--bdr);flex-wrap:wrap">
+            <button class="atlas-filter btn active" data-region="all">ALL</button>
+            <button class="atlas-filter btn" data-region="Europe">EUR</button>
+            <button class="atlas-filter btn" data-region="North America">N.AM</button>
+            <button class="atlas-filter btn" data-region="Middle East">M.E.</button>
+            <button class="atlas-filter btn" data-region="East Asia">E.AS</button>
+            <button class="atlas-filter btn" data-region="Africa">AFR</button>
+          </div>
+          <div class="pscroll" id="atlas-list"></div>
+        </aside>
+        <main id="atlas-detail" class="panel">
+          <div id="atlas-detail-content">
+            <div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--td);text-align:center;font-family:'Orbitron',monospace;font-size:11px;letter-spacing:2px">
+              ⬡ SELECT A COUNTRY TO VIEW INTELLIGENCE PROFILE
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- PAGE 3: MILITARY -->
+    <div class="page" id="page-military">
+      <div id="military-layout">
+        <div class="panel" id="mil-overview">
+          <div class="ph">
+            <div class="pt">⬡ Global Military Spending Overview</div>
+            <div class="pc">USD BILLIONS · ANNUAL</div>
+          </div>
+          <div id="mil-summary"></div>
+        </div>
+        <div class="panel" id="mil-rankings">
+          <div class="ph">
+            <div class="pt">⬡ Top 15 Defense Budgets</div>
+            <div class="pc">SIPRI ESTIMATES</div>
+          </div>
+          <div class="pscroll" id="mil-rank-list"></div>
+        </div>
+        <div class="panel" id="mil-personnel">
+          <div class="ph">
+            <div class="pt">⬡ Active Military Personnel</div>
+            <div class="pc">THOUSANDS</div>
+          </div>
+          <div class="pscroll" id="mil-personnel-list"></div>
+        </div>
+        <div class="panel" id="mil-nuclear">
+          <div class="ph">
+            <div class="pt">⬡ Nuclear Powers</div>
+            <div class="pc">WARHEAD STOCKPILES</div>
+          </div>
+          <div class="pscroll" id="mil-nuclear-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 4: CONFLICTS -->
+    <div class="page" id="page-conflicts">
+      <div id="conflicts-layout">
+        <aside id="conflicts-left" class="panel">
+          <div class="ph">
+            <div class="pt">⬡ Active Conflicts</div>
+            <div class="pc" id="c-count">— ZONES</div>
+          </div>
+          <div class="pscroll" id="conflicts-list"></div>
+        </aside>
+        <main id="conflict-detail" class="panel">
+          <div id="conflict-detail-content">
+            <div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--td);text-align:center;font-family:'Orbitron',monospace;font-size:11px;letter-spacing:2px">
+              ⬡ SELECT A CONFLICT FOR FULL INTEL BRIEFING
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- PAGE 5: NEWS WIRE -->
+    <div class="page" id="page-newswire">
+      <div id="newswire-layout">
+        <aside id="newswire-left" class="panel">
+          <div class="ph">
+            <div class="pt">⬡ News Filters</div>
+            <div class="pc" id="news-total">0</div>
+          </div>
+          <div style="padding:10px 13px;border-bottom:1px solid var(--bdr)">
+            <input id="news-search" placeholder="Search headlines..." style="width:100%;background:rgba(0,200,255,.04);border:1px solid var(--bdr);color:var(--tp);font-family:Share Tech Mono,monospace;font-size:10px;padding:7px;outline:none">
+          </div>
+          <div style="padding:10px 13px;border-bottom:1px solid var(--bdr)">
+            <div style="font-size:8px;letter-spacing:2px;color:var(--td);margin-bottom:6px;text-transform:uppercase">CATEGORY</div>
+            <div style="display:flex;gap:4px;flex-wrap:wrap" id="news-categories">
+              <button class="nw-cat btn active" data-cat="all">ALL</button>
+              <button class="nw-cat btn" data-cat="war">WAR</button>
+              <button class="nw-cat btn" data-cat="conflict">CONFLICT</button>
+              <button class="nw-cat btn" data-cat="geopolitics">GEOPOL</button>
+              <button class="nw-cat btn" data-cat="nuclear">NUCLEAR</button>
+              <button class="nw-cat btn" data-cat="economics">ECON</button>
+              <button class="nw-cat btn" data-cat="cyber">CYBER</button>
+            </div>
+          </div>
+          <div style="padding:10px 13px;border-bottom:1px solid var(--bdr)">
+            <div style="font-size:8px;letter-spacing:2px;color:var(--td);margin-bottom:6px;text-transform:uppercase">SOURCES</div>
+            <div class="pscroll" id="news-source-list" style="max-height:180px"></div>
+          </div>
+          <div class="pscroll" id="newswire-list"></div>
+        </aside>
+        <main id="newswire-main" class="panel">
+          <div id="newswire-feed-header" class="ph">
+            <div class="pt">⬡ Newswire Feed</div>
+            <div class="pc"><span class="pulse-dot crit" style="margin-right:6px"></span>LIVE</div>
+          </div>
+          <div class="pscroll" id="newswire-feed"></div>
+        </main>
+        <aside id="newswire-right" class="panel">
+          <div class="ph">
+            <div class="pt">⬡ Article Reader</div>
+            <div class="pc" id="article-reader-status">NO SELECTION</div>
+          </div>
+          <div class="pscroll" id="article-reader">
+            <div style="padding:40px 20px;text-align:center;color:var(--td);font-family:'Orbitron',monospace;font-size:10px;letter-spacing:2px">
+              ⬡ CLICK ANY HEADLINE TO READ
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- PAGE 6: MARKETS -->
+    <div class="page" id="page-markets">
+      <div id="markets-layout">
+        <div class="panel" id="mk-commodities">
+          <div class="ph">
+            <div class="pt">⬡ Commodities & Energy</div>
+            <div class="pc"><span class="pulse-dot crit" style="margin-right:5px"></span>LIVE</div>
+          </div>
+          <div class="pscroll" id="mk-commodities-list"></div>
+        </div>
+        <div class="panel" id="mk-defense">
+          <div class="ph">
+            <div class="pt">⬡ Defense Sector Stocks</div>
+            <div class="pc">REAL-TIME</div>
+          </div>
+          <div class="pscroll" id="mk-defense-list"></div>
+        </div>
+        <div class="panel" id="mk-currencies">
+          <div class="ph">
+            <div class="pt">⬡ Geopolitical Currency Pairs</div>
+            <div class="pc">FX</div>
+          </div>
+          <div class="pscroll" id="mk-currencies-list"></div>
+        </div>
+        <div class="panel" id="mk-impact">
+          <div class="ph">
+            <div class="pt">⬡ Geopolitical Impact Analysis</div>
+            <div class="pc">CORRELATION</div>
+          </div>
+          <div class="pscroll" id="mk-impact-content"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── STATUS BAR ── -->
+  <footer id="statusbar">
+    <div class="sb-item"><span class="k">CONN:</span> <span class="v sb-tag" id="sb-conn">PENDING</span></div>
+    <div class="sb-item"><span class="k">FLIGHTS:</span> <span class="v" id="sb-flights">0</span></div>
+    <div class="sb-item"><span class="k">CONFLICTS:</span> <span class="v" id="sb-conflicts">0</span></div>
+    <div class="sb-item"><span class="k">ALERTS:</span> <span class="v" id="sb-alerts">0</span></div>
+    <div class="sb-item"><span class="k">ARTICLES:</span> <span class="v" id="sb-articles">0</span></div>
+    <div class="sb-spacer"></div>
+    <div class="sb-item" id="sb-ticker"></div>
+  </footer>
+</div>
+
+<!-- ── MODAL ── -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal" id="modal-content">
+    <span class="modal-close" onclick="closeModal()">×</span>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<!-- ── SCRIPTS (load order matters) ── -->
+<script src="core.js"></script>
+<script src="pages/globe.js"></script>
+<script src="pages/atlas.js"></script>
+<script src="pages/military.js"></script>
+<script src="pages/conflicts.js"></script>
+<script src="pages/newswire.js"></script>
+<script src="pages/markets.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
